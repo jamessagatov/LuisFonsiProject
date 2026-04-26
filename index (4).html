@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellas Creativas: Luis Fonsi — James Sagatov</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Arial Black', Arial, sans-serif; background: #1a1a1a; color: #f0ece0; }
+  nav { position: fixed; top: 0; width: 100%; background: #0d0d0d; z-index: 100; display: flex; justify-content: flex-end; gap: 36px; padding: 18px 60px; border-bottom: 1px solid #333; }
+  nav a { color: #aaa; text-decoration: none; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; transition: color 0.2s; }
+  nav a:hover, nav a.active { color: #c9a84c; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #222; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, #0d0d0d 0%, rgba(44,31,14,.68) 50%, #0d0d0d 100%); }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; }
+  .hero-content { position: relative; z-index: 2; text-align: center; padding: 20px; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 6px; color: #c9a84c; text-transform: uppercase; margin-bottom: 24px; border-bottom: 1px solid #c9a84c; padding-bottom: 10px; display: inline-block; }
+  .hero-name { font-size: clamp(90px, 20vw, 220px); font-weight: 900; letter-spacing: -4px; color: #f0ece0; line-height: 0.82; text-transform: uppercase; }
+  .hero-sub { font-size: clamp(12px, 1.5vw, 18px); letter-spacing: 5px; color: #c9a84c; text-transform: uppercase; margin-top: 28px; font-weight: 700; }
+  .home-intro { background: #111; padding: 70px 60px; text-align: center; }
+  .home-intro p { font-size: 13px; letter-spacing: 3px; color: #888; text-transform: uppercase; max-width: 680px; margin: 0 auto; line-height: 2.2; }
+  .entry-cards { display: flex; justify-content: center; gap: 50px; margin-top: 60px; flex-wrap: wrap; }
+  .entry-card { cursor: pointer; text-align: center; padding: 30px 40px; border: 1px solid #333; transition: border-color 0.2s; }
+  .entry-card:hover { border-color: #c9a84c; }
+  .entry-card .num { font-size: 36px; font-weight: 900; color: #c9a84c; }
+  .entry-card .label { font-size: 10px; letter-spacing: 4px; color: #666; margin-top: 8px; text-transform: uppercase; }
+  .entry-header { padding: 130px 60px 60px; background: #111; text-align: center; border-bottom: 2px solid #c9a84c; }
+  .entry-num { font-size: 11px; letter-spacing: 6px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; }
+  .entry-header h1 { font-size: clamp(26px, 4.5vw, 58px); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; line-height: 1.1; }
+  .entry-header .sub { font-size: 12px; letter-spacing: 3px; color: #666; margin-top: 14px; text-transform: uppercase; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+  .row.flip { direction: rtl; }
+  .row.flip > * { direction: ltr; }
+  .row-img { width: 100%; height: 440px; object-fit: cover; filter: grayscale(8%); display: block; background:#2a2a2a; }
+  .row-text { padding: 60px 56px; background: #1e1e1e; font-size: clamp(13px, 1.2vw, 16px); line-height: 1.95; letter-spacing: 0.8px; text-transform: uppercase; color: #ccc; }
+  .row-text p { margin-bottom: 18px; }
+  .full-dark { background: #111; padding: 80px 60px; }
+  .full-dark .inner { max-width: 1100px; margin: 0 auto; }
+  .full-dark .inner p { font-size: clamp(13px, 1.2vw, 16px); line-height: 1.95; letter-spacing: 0.8px; text-transform: uppercase; color: #ccc; margin-bottom: 20px; }
+  .full-grey { background: #262626; padding: 80px 60px; }
+  .full-grey .inner { max-width: 1100px; margin: 0 auto; }
+  .full-grey .inner p { font-size: clamp(13px, 1.2vw, 16px); line-height: 1.95; letter-spacing: 0.8px; text-transform: uppercase; color: #ccc; margin-bottom: 20px; }
+  .slabel { font-size: 10px; letter-spacing: 5px; color: #c9a84c; text-transform: uppercase; margin-bottom: 10px; display: block; }
+  .stitle { font-size: clamp(20px, 2.8vw, 38px); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 36px; border-left: 4px solid #c9a84c; padding-left: 18px; line-height: 1.2; }
+  .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; padding: 80px 60px; background: #1a1a1a; max-width: 1300px; margin: 0 auto; }
+  .acard { background: #1e1e1e; border-top: 3px solid #c9a84c; padding: 32px; }
+  .acard h3 { font-size: 12px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; }
+  .acard p { font-size: 12px; line-height: 1.9; color: #bbb; text-transform: uppercase; letter-spacing: 0.5px; }
+  .gold-quote { background: #c9a84c; color: #111; padding: 70px 60px; text-align: center; }
+  .gold-quote p { font-size: clamp(15px, 2.2vw, 26px); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; line-height: 1.6; max-width: 860px; margin: 0 auto; }
+  footer { background: #0a0a0a; padding: 40px 60px; text-align: center; border-top: 1px solid #222; }
+  footer p { font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase; }
+  @media (max-width: 820px) {
+    .row, .analysis-grid, .entry-cards { grid-template-columns: 1fr; flex-direction: column; }
+    .row.flip { direction: ltr; }
+    nav { gap: 16px; padding: 14px 20px; }
+    .hero-name { font-size: 80px; letter-spacing: -2px; }
+    .row-img { height: 280px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" onclick="show('home')" id="n-home" class="active">INICIO</a>
+  <a href="#" onclick="show('p1')" id="n-p1">HISTORIA</a>
+  <a href="#" onclick="show('p2')" id="n-p2">ESTILO</a>
+  <a href="#" onclick="show('p3')" id="n-p3">CONTEXTO</a>
+  <a href="#" onclick="show('p4')" id="n-p4">IMPACTO</a>
+</nav>
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/98c3eb0d5f9ae3d5590ed8151f5de33326bbc08c.jpg" alt="Escenario con luces de concierto">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Huellas Creativas &mdash; James Sagatov &mdash; IB Espa&ntilde;ol</div>
+      <div class="hero-name">LUIS<br>FONSI</div>
+      <div class="hero-sub">Retrato de un Artista &bull; Cuatro Entradas</div>
+    </div>
+  </div>
+  <div class="home-intro">
+    <p>Un cantante y compositor puertorrique&ntilde;o que conquist&oacute; audiencias con melod&iacute;as pegajosas y letras emotivas. Con una carrera que cruz&oacute; fronteras, mostr&oacute; c&oacute;mo la m&uacute;sica puede unir culturas y generaciones.</p>
+    <div class="entry-cards">
+      <div class="entry-card" onclick="show('p1')"><div class="num">01</div><div class="label">Historia e<br>Influencias</div></div>
+      <div class="entry-card" onclick="show('p2')"><div class="num">02</div><div class="label">Estilo y<br>Obras</div></div>
+      <div class="entry-card" onclick="show('p3')"><div class="num">03</div><div class="label">Contexto y<br>Movimiento</div></div>
+      <div class="entry-card" onclick="show('p4')"><div class="num">04</div><div class="label">Influencia<br>Cultural</div></div>
+    </div>
+  </div>
+  <footer><p>James Sagatov &mdash; IB Espa&ntilde;ol &mdash; Huellas Creativas &mdash; 2026</p></footer>
+</div>
+<div id="p1" class="page">
+  <div class="entry-header"><div class="entry-num">Entrada 01</div><h1>Retrato del Artista:<br>Vida e Influencias Tempranas</h1><p class="sub">Historia &bull; Familia &bull; Formaci&oacute;n</p></div>
+  <div class="row">
+    <div class="row-text">
+      <p>Luis Fonsi, quien se convirti&oacute; en una voz influyente del pop latino, es un cantante y compositor puertorrique&ntilde;o que conquist&oacute; audiencias con melod&iacute;as pegajosas y letras emotivas. Con una carrera que cruz&oacute; fronteras, mostr&oacute; c&oacute;mo la m&uacute;sica puede unir culturas y generaciones.</p>
+      <p>Naci&oacute; el 15 de abril de 1978 en San Juan, Puerto Rico, como Luis Alfonso Rodr&iacute;guez L&oacute;pez-Cepero. Su familia se mud&oacute; a Orlando, Florida, cuando ten&iacute;a diez a&ntilde;os, un cambio que expuso a Fonsi tanto a la cultura latina como a la estadounidense.</p>
+    </div>
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/3c6aa23fbd15bd6297fb29f879ab113fb84df360.jpg" alt="Retrato de Luis Fonsi">
+  </div>
+  <div class="full-dark"><div class="inner"><span class="slabel">Formaci&oacute;n Musical</span><h2 class="stitle">Educaci&oacute;n y Primeros Pasos</h2><p>Desde temprana edad, Fonsi mostr&oacute; inter&eacute;s por la m&uacute;sica. Estudi&oacute; en la Universidad Estatal de Florida, donde perfeccion&oacute; sus habilidades vocales y aprendi&oacute; teor&iacute;a musical. Durante este tiempo, particip&oacute; en grupos corales y comenz&oacute; a escribir sus propias canciones.</p><p>Su educaci&oacute;n formal le proporcion&oacute; una base s&oacute;lida en t&eacute;cnica vocal y composici&oacute;n, elementos que m&aacute;s tarde definir&iacute;an su estilo &uacute;nico. Estos a&ntilde;os de formaci&oacute;n fueron cruciales para desarrollar la disciplina y creatividad que marcar&iacute;an su carrera.</p></div></div>
+  <div class="row flip">
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/a7b994f6c0820d6fb42dfa8ce9fc92c6035ccbb7.jpg" alt="Concierto con micr&oacute;fono y luces">
+    <div class="row-text"><p>En 1998, lanz&oacute; su &aacute;lbum debut "Comenzar&eacute;", que rápidamente gan&oacute; atenci&oacute;n en el mercado latino. Canciones como "Si T&uacute; Quisieras" y "Perdóname" resonaron con el p&uacute;blico, estableciendo su reputaci&oacute;n como un talentoso cantautor.</p><p>Sus influencias musicales incluyeron artistas como Julio Iglesias y Jos&eacute; Feliciano, quienes inspiraron su enfoque rom&aacute;ntico y emotivo. Esta mezcla de tradici&oacute;n y modernidad se convirti&oacute; en su sello distintivo.</p></div>
+  </div>
+  <footer><p>James Sagatov &mdash; IB Espa&ntilde;ol &mdash; Huellas Creativas &mdash; 2026</p></footer>
+</div>
+<div id="p2" class="page">
+  <div class="entry-header"><div class="entry-num">Entrada 02</div><h1>Estilo Musical y Obras Representativas</h1><p class="sub">G&eacute;nero &bull; T&eacute;cnica &bull; Canciones</p></div>
+  <div class="full-grey"><div class="inner"><span class="slabel">Caracter&iacute;sticas</span><h2 class="stitle">Definici&oacute;n del Estilo de Fonsi</h2><p>El estilo de Luis Fonsi se caracteriza por baladas rom&aacute;nticas y ritmos latinos contagiosos. Su m&uacute;sica combina elementos del pop, reggaet&oacute;n, y balada tradicional, creando un sonido que es tanto moderno como atemporal.</p><p>Sus letras suelen explorar temas de amor, p&eacute;rdida y celebraci&oacute;n, con melod&iacute;as que se quedan en la mente del oyente. Esta combinaci&oacute;n de emoci&oacute;n y ritmo ha sido clave para su &eacute;xito global.</p></div></div>
+  <div class="analysis-grid">
+    <div class="acard"><h3>Aquí Estoy Yo (2008)</h3><p>Colaboraci&oacute;n con Aleks Syntek, Noel Schajris y David Bisbal. Una balada poderosa que destaca la capacidad de Fonsi para armonizar con otros artistas y crear m&uacute;sica emotiva que trasciende fronteras.</p></div>
+    <div class="acard"><h3>No Me Doy Por Vencido (2008)</h3><p>Un himno de perseverancia y determinaci&oacute;n. La canci&oacute;n muestra su habilidad para escribir letras inspiradoras acompa&ntilde;adas de melod&iacute;as pegajosas que conectan con audiencias diversas.</p></div>
+    <div class="acard"><h3>Despacito (2017)</h3><p>Su &eacute;xito m&aacute;s ic&oacute;nico, que fusion&oacute; reggaet&oacute;n y pop latino. La colaboraci&oacute;n con Daddy Yankee y posteriormente Justin Bieber catapult&oacute; la canci&oacute;n a niveles sin precedentes de popularidad global.</p></div>
+  </div>
+  <div class="gold-quote"><p>"La m&uacute;sica no tiene fronteras. Cuando conectas con las emociones de la gente, el idioma se vuelve secundario."</p></div>
+  <div class="row">
+    <div class="row-text"><p>"Despacito" no solo domin&oacute; las listas de reproducci&oacute;n, sino que tambi&eacute;n rompi&oacute; r&eacute;cords en plataformas digitales. Con miles de millones de reproducciones, la canci&oacute;n demostr&oacute; el poder del pop latino en el escenario mundial.</p><p>El video musical, filmado en Puerto Rico, celebr&oacute; la cultura caribe&ntilde;a y se convirti&oacute; en un fen&oacute;meno viral. Su ritmo suave y letra rom&aacute;ntica resonaron con oyentes de todas las edades y or&iacute;genes.</p></div>
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/a7b994f6c0820d6fb42dfa8ce9fc92c6035ccbb7.jpg" alt="Portada de Despacito">
+  </div>
+  <div class="row flip">
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/6eec2a4a9a5b462e03bc821c5cb5b340014fe68e.jpg" alt="Portada de No Me Doy Por Vencido">
+    <div class="row-text"><p>En sus obras m&aacute;s conocidas, Fonsi demuestra una capacidad constante de combinar sensibilidad emocional con producci&oacute;n comercial accesible. Esa flexibilidad sonora ayud&oacute; a mantener su relevancia durante varias etapas de su carrera.</p><p>Su evoluci&oacute;n musical refleja c&oacute;mo un artista puede conservar una identidad reconocible mientras adapta su sonido a nuevas tendencias del pop latino.</p></div>
+  </div>
+  <footer><p>James Sagatov &mdash; IB Espa&ntilde;ol &mdash; Huellas Creativas &mdash; 2026</p></footer>
+</div>
+<div id="p3" class="page">
+  <div class="entry-header"><div class="entry-num">Entrada 03</div><h1>Contexto Hist&oacute;rico y Movimiento Musical</h1><p class="sub">&Eacute;poca &bull; Tendencias &bull; Influencias</p></div>
+  <div class="full-dark"><div class="inner"><span class="slabel">Contexto Global</span><h2 class="stitle">La Explosi&oacute;n del Pop Latino</h2><p>Luis Fonsi emergi&oacute; en una &eacute;poca en que el pop latino estaba ganando terreno internacional. Artistas como Ricky Martin, Shakira y Enrique Iglesias hab&iacute;an abierto puertas, pero Fonsi llev&oacute; este g&eacute;nero a nuevas alturas con "Despacito".</p><p>Los a&ntilde;os 2000 y 2010 vieron un aumento en la colaboraci&oacute;n entre artistas latinos e internacionales, facilitado por el streaming y las redes sociales. Esta era digital permiti&oacute; que la m&uacute;sica en espa&ntilde;ol alcanzara audiencias globales como nunca antes.</p></div></div>
+  <div class="row flip">
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/73891b67dc3440883ea84322d6631a86bd4ca8a2.jpg" alt="P&uacute;blico en un concierto">
+    <div class="row-text"><p>El reggaet&oacute;n, que se origin&oacute; en Puerto Rico en los a&ntilde;os 90, se fusion&oacute; con el pop en la d&eacute;cada de 2010. Esta mezcla cre&oacute; un nuevo sonido que domin&oacute; las listas de &eacute;xitos mundiales.</p><p>Fonsi aprovech&oacute; esta tendencia, combinando sus ra&iacute;ces rom&aacute;nticas con ritmos modernos de reggaet&oacute;n. Esta visi&oacute;n le permiti&oacute; mantenerse relevante y conectar con nuevas generaciones de oyentes.</p></div>
+  </div>
+  <div class="full-grey"><div class="inner"><span class="slabel">Movimiento Cultural</span><h2 class="stitle">Impacto en la M&uacute;sica Latina</h2><p>Su &eacute;xito inspir&oacute; a otros artistas latinos a experimentar con g&eacute;neros y colaboraciones internacionales. Demostr&oacute; que la m&uacute;sica en espa&ntilde;ol pod&iacute;a competir en igualdad de condiciones en el mercado global.</p><p>Fonsi tambi&eacute;n jug&oacute; un papel importante en romper estereotipos sobre la m&uacute;sica latina, mostrando que pod&iacute;a ser sofisticada, universal y comercialmente exitosa sin perder su autenticidad cultural.</p></div></div>
+  <footer><p>James Sagatov &mdash; IB Espa&ntilde;ol &mdash; Huellas Creativas &mdash; 2026</p></footer>
+</div>
+<div id="p4" class="page">
+  <div class="entry-header"><div class="entry-num">Entrada 04</div><h1>Influencia Cultural y Legado</h1><p class="sub">Premios &bull; Reconocimiento &bull; Futuro</p></div>
+  <div class="row">
+    <div class="row-text"><p>Luis Fonsi ha recibido numerosos premios, incluyendo Latin Grammys, Billboard Music Awards y American Music Awards. Estos reconocimientos reflejan su impacto tanto en la m&uacute;sica latina como en la industria global.</p><p>"Despacito" recibi&oacute; m&uacute;ltiples nominaciones a los Grammy y se convirti&oacute; en la canci&oacute;n m&aacute;s reproducida de todos los tiempos en plataformas de streaming, un testimonio de su alcance sin precedentes.</p></div>
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/dbb6553e39b1447ea984056240f39b981fc6b8ab.jpg" alt="Retrato de Luis Fonsi">
+  </div>
+  <div class="gold-quote"><p>"Mi objetivo siempre ha sido hacer m&uacute;sica que toque el coraz&oacute;n de la gente, sin importar de d&oacute;nde vengan."</p></div>
+  <div class="full-dark"><div class="inner"><span class="slabel">Legado Cultural</span><h2 class="stitle">Un Puente Entre Culturas</h2><p>M&aacute;s all&aacute; de los n&uacute;meros y premios, el legado de Luis Fonsi reside en su capacidad para unir culturas a trav&eacute;s de la m&uacute;sica. Demostr&oacute; que las canciones en espa&ntilde;ol pod&iacute;an resonar universalmente, abriendo puertas para futuros artistas latinos.</p><p>Su influencia se extiende a la nueva generaci&oacute;n de m&uacute;sicos que ahora ven el mercado global como accesible. Fonsi prob&oacute; que la autenticidad cultural y el &eacute;xito comercial no son mutuamente excluyentes.</p></div></div>
+  <div class="row flip">
+    <img class="row-img" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/4d7078315a387c263c51f1e75dab1f8153584e03.jpg" alt="Escenario con luces y audiencia">
+    <div class="row-text"><p>Hoy, Luis Fonsi contin&uacute;a creando m&uacute;sica y colaborando con artistas de diversos g&eacute;neros. Su evoluci&oacute;n art&iacute;stica demuestra una capacidad constante de adaptarse sin perder su esencia.</p><p>Su legado perdura como un recordatorio del poder de la m&uacute;sica para trascender barreras ling&uuml;&iacute;sticas y culturales, inspirando tanto a artistas como a oyentes en todo el mundo.</p></div>
+  </div>
+  <footer><p>James Sagatov &mdash; IB Espa&ntilde;ol &mdash; Huellas Creativas &mdash; 2026</p></footer>
+</div>
+<script>
+function show(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('n-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
